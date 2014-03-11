@@ -16,7 +16,7 @@ public class OilTempGauge extends GaugeView {
 	}
 	
 	public String getDisplayLabel() {
-		return "Water Temperature (F)";
+		return "Oil Temperature (F)";
 	}
 	public boolean isInRange() {
 		int max = Integer.parseInt(getPreferences().getString("maxOilTemperature", "250"));

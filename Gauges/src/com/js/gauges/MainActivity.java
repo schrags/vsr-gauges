@@ -17,6 +17,7 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 //arudino inputs
@@ -36,6 +37,9 @@ public class MainActivity extends Activity {
 	private BluetoothSocket socket;
 	private StreamReader reader;
 	
+	//Parent Layout
+	private View contentView;
+	
 	//Gauges
 	private OilPressureGauge oilPressure;
 	private OilTempGauge oilTemp;
@@ -47,15 +51,19 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);  
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
+        contentView = (View) findViewById(R.id.contentView);
         oilPressure = (OilPressureGauge) findViewById(R.id.oilPressureGauge);
         oilTemp = (OilTempGauge) findViewById(R.id.oilTempGauge);
         waterTemp = (WaterTempGauge) findViewById(R.id.waterTempGauge);
         voltage = (VoltageGauge) findViewById(R.id.voltageGauge);
-        
+
+        this.setupActionBar();
         this.showLoading();        
         new InitConnect().execute();
+        
+        
     }
     
     private class InitConnect extends AsyncTask<Void, Void, Boolean> {
@@ -84,6 +92,20 @@ public class MainActivity extends Activity {
     	        }
     		 	return true;
          }
+    }
+    
+    private void setupActionBar() {		
+    	contentView.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				if (getActionBar().isShowing()) {
+					getActionBar().hide();
+				} else {
+					getActionBar().show();
+				}
+				
+			}
+		});
     }
     
     private void showLoading() {
