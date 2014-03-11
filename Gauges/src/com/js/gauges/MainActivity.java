@@ -25,7 +25,6 @@ import android.view.WindowManager;
 //1 - Oil Temperature
 //2 - Water Temperature
 //3 - Voltage
-//tedSTttt
 
 public class MainActivity extends Activity {
 	public static final String MESSAGE = "com.js.gauges.MESSAGE";
