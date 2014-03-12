@@ -5,14 +5,8 @@ import android.util.AttributeSet;
 
 public class VoltageGauge extends GaugeView {
 
-	private double voltage;
-
 	public VoltageGauge(Context context, AttributeSet attrs) {
 		super(context, attrs);
-	}
-
-	public String getDisplayValue() {		
-		return String.format("%.2f", voltage);
 	}
 
 	public String getDisplayLabel() {
@@ -21,12 +15,10 @@ public class VoltageGauge extends GaugeView {
 
 	public boolean isInRange() {
 		double min = Double.parseDouble(getPreferences().getString("minVoltage","12.5"));
-		return voltage >= min;
+		return getValue() >= min;
 	}
-
-	public void setVoltage(double voltage) {
-		this.voltage = voltage * 4.1545;
-
-		this.refreshDisplay();
+	
+	public double voltageToValue(double voltage) {
+		return voltage * 4.1545; 
 	}
 }

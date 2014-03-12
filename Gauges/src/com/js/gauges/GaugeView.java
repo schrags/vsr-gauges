@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 public abstract class GaugeView extends LinearLayout {
 	private SharedPreferences preferences;
+	private double value;
 	public GaugeView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		inflate(context, R.layout.gauge_view, this);		
@@ -38,8 +39,21 @@ public abstract class GaugeView extends LinearLayout {
 		sensorValue.setText("--");
 		setInRange(false, (LinearLayout) findViewById(R.id.sensorLayout));
 	}
-
-	public abstract String getDisplayValue();
+	
+	public void setVoltage(double voltage) {
+		value = this.voltageToValue(voltage);
+		this.refreshDisplay();
+	}
+	
+	public double getValue() {
+		return value;
+	}
+	
+	public String getDisplayValue() {
+		return String.format("%.2f", getValue());
+	}
+	
+	public abstract double voltageToValue(double voltage);
 
 	public abstract String getDisplayLabel();
 

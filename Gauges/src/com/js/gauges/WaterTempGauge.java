@@ -5,14 +5,13 @@ import android.util.AttributeSet;
 
 public class WaterTempGauge extends GaugeView {
 	private static final double WATER_RSENSE = 46.5;	//senseR for 100-240F water thermistor
-	private long temperature;
 	
 	public WaterTempGauge(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
 	public String getDisplayValue() {
-    	return Long.toString(temperature);
+    	return Long.toString(Math.round(getValue()));
 	}
 	
 	public String getDisplayLabel() {
@@ -20,13 +19,11 @@ public class WaterTempGauge extends GaugeView {
 	}
 	public boolean isInRange() {
 		int max = Integer.parseInt(getPreferences().getString("maxWaterTemperature", "210"));
-    	return temperature <= max;    	
+    	return getValue() <= max;    	
 	}
-	public void setVoltage(double voltage) {
-    	double resistance = 5 * WATER_RSENSE / (5 - voltage) -  (5 - voltage) / WATER_RSENSE - WATER_RSENSE;
-    	double tempValue = -71.89 * Math.log(resistance) + 491.79;
-    	temperature = Math.round(tempValue);
-    	
-    	this.refreshDisplay();
+	
+	public double voltageToValue(double voltage) {
+		double resistance = 5 * WATER_RSENSE / (5 - voltage) -  (5 - voltage) / WATER_RSENSE - WATER_RSENSE;
+    	return -71.89 * Math.log(resistance) + 491.79;
 	}
 }
