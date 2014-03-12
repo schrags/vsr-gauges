@@ -62,8 +62,7 @@ public class MainActivity extends Activity {
         this.setupActionBar();
         this.showLoading();        
         new InitConnect().execute();
-        
-        
+       
     }
     
     private class InitConnect extends AsyncTask<Void, Void, Boolean> {
@@ -186,13 +185,19 @@ public class MainActivity extends Activity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
- 
-        case R.id.action_settings:
-            Intent i = new Intent(this, SettingsActivity.class);
-            startActivityForResult(i, RESULT_SETTINGS);
-            break; 
-        }
+		switch (item.getItemId()) {
+
+			case R.id.action_settings:
+				Intent i = new Intent(this, SettingsActivity.class);
+				startActivityForResult(i, RESULT_SETTINGS);
+				break;
+			case R.id.reset_peak:				
+		    	oilPressure.resetPeakValues();
+		        oilTemp.resetPeakValues();
+		        waterTemp.resetPeakValues();
+		        voltage.resetPeakValues();
+				break;
+		}
  
         return true;
     }

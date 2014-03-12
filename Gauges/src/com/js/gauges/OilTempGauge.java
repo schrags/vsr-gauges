@@ -10,8 +10,8 @@ public class OilTempGauge extends GaugeView {
 		super(context, attrs);
 	}
 
-	public String getDisplayValue() {
-    	return Long.toString(Math.round(getValue()));
+	public String valueFormatter(double value) {
+		return Long.toString(Math.round(value));
 	}
 	
 	public String getDisplayLabel() {

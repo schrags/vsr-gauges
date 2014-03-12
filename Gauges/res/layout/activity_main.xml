@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.js.gauges"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,12 +18,16 @@
 
             <com.js.gauges.OilPressureGauge
                 android:id="@+id/oilPressureGauge"
+                custom:showPeakMax="true"
+                custom:showPeakMin="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <com.js.gauges.WaterTempGauge
                 android:id="@+id/waterTempGauge"
+                custom:showPeakMax="true"
+                custom:showPeakMin="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
@@ -36,6 +41,8 @@
 
             <com.js.gauges.OilTempGauge
                 android:id="@+id/oilTempGauge"
+                custom:showPeakMax="true"
+                custom:showPeakMin="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
