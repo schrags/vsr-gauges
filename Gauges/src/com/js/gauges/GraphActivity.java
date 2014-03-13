@@ -31,24 +31,22 @@ public class GraphActivity extends Activity {
 		IntentFilter filter1 = new IntentFilter(MainActivity.GAUGE_VALUE_MESSAGE);
     	registerReceiver(mReceiver, filter1);
 
-    	oilPressureSeries = new GraphViewSeries(new GraphViewData[] { 	new GraphViewData(1, 2.0d),
-																		new GraphViewData(2, 100d) });
+    	oilPressureSeries = new GraphViewSeries(new GraphViewData[] {});
     	oilPressureSeries.getStyle().color = Color.BLACK;
   
-    	oilTempSeries = new GraphViewSeries(new GraphViewData[] { 	new GraphViewData(1, 2.0d),
-																	new GraphViewData(2, 100d) });
+    	oilTempSeries = new GraphViewSeries(new GraphViewData[] {});
     	oilTempSeries.getStyle().color = Color.BLACK;
     	
-    	waterTempSeries = new GraphViewSeries(new GraphViewData[] { 	new GraphViewData(1, 2.0d),
-																		new GraphViewData(2, 100d) });
+    	waterTempSeries = new GraphViewSeries(new GraphViewData[] {});
     	waterTempSeries.getStyle().color = Color.BLACK;
 
     	LineGraphView oilPressureGraph = new LineGraphView(this, "Oil Pressure");
 		oilPressureGraph.addSeries(oilPressureSeries);
 		oilPressureGraph.setViewPort(1, 15);
+		oilPressureGraph.setManualYAxisBounds(100, 0);
+		oilPressureGraph.getGraphViewStyle().setNumVerticalLabels(5);
 		oilPressureGraph.setScalable(true);
 		oilPressureGraph.setHorizontalLabels(new String[]{});
-		oilPressureGraph.getGraphViewStyle().setNumVerticalLabels(5);
 		oilPressureGraph.setDrawBackground(true);
 		oilPressureGraph.setBackgroundColor(Color.GRAY);
 //		oilPressureGraph.getGraphViewStyle().setGridColor(Color.BLACK);
@@ -63,9 +61,10 @@ public class GraphActivity extends Activity {
 		LineGraphView oilTempGraph = new LineGraphView(this, "Oil Temperature");
 		oilTempGraph.addSeries(oilTempSeries);
 		oilTempGraph.setViewPort(1, 15);
-		oilTempGraph.setScalable(true);
-		oilTempGraph.setHorizontalLabels(new String[]{});
+		oilTempGraph.setManualYAxisBounds(280, 100);
 		oilTempGraph.getGraphViewStyle().setNumVerticalLabels(5);
+		oilTempGraph.setScalable(true);
+		oilTempGraph.setHorizontalLabels(new String[]{});		
 		oilTempGraph.setDrawBackground(true);
 		oilTempGraph.setBackgroundColor(Color.GRAY);
 		LinearLayout oilTempLayout = (LinearLayout) findViewById(R.id.oilTempGraph);
@@ -74,9 +73,10 @@ public class GraphActivity extends Activity {
 		LineGraphView waterTempGraph = new LineGraphView(this, "Water Temperature");
 		waterTempGraph.addSeries(waterTempSeries);
 		waterTempGraph.setViewPort(1, 15);
+		waterTempGraph.setManualYAxisBounds(240, 100);
+		waterTempGraph.getGraphViewStyle().setNumVerticalLabels(5);
 		waterTempGraph.setScalable(true);
 		waterTempGraph.setHorizontalLabels(new String[]{});
-		waterTempGraph.getGraphViewStyle().setNumVerticalLabels(5);
 		waterTempGraph.setDrawBackground(true);
 		waterTempGraph.setBackgroundColor(Color.GRAY);
 		LinearLayout waterTempLayout = (LinearLayout) findViewById(R.id.waterTempGraph);
