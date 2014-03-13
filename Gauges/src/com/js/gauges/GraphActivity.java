@@ -42,7 +42,7 @@ public class GraphActivity extends Activity {
 
     	LineGraphView oilPressureGraph = new LineGraphView(this, "Oil Pressure");
 		oilPressureGraph.addSeries(oilPressureSeries);
-		oilPressureGraph.setViewPort(1, 15);
+		oilPressureGraph.setViewPort(1, 50);
 		oilPressureGraph.setManualYAxisBounds(100, 0);
 		oilPressureGraph.getGraphViewStyle().setNumVerticalLabels(5);
 		oilPressureGraph.setScalable(true);
@@ -60,7 +60,7 @@ public class GraphActivity extends Activity {
 		
 		LineGraphView oilTempGraph = new LineGraphView(this, "Oil Temperature");
 		oilTempGraph.addSeries(oilTempSeries);
-		oilTempGraph.setViewPort(1, 15);
+		oilTempGraph.setViewPort(1, 50);
 		oilTempGraph.setManualYAxisBounds(280, 100);
 		oilTempGraph.getGraphViewStyle().setNumVerticalLabels(5);
 		oilTempGraph.setScalable(true);
@@ -72,7 +72,7 @@ public class GraphActivity extends Activity {
 		
 		LineGraphView waterTempGraph = new LineGraphView(this, "Water Temperature");
 		waterTempGraph.addSeries(waterTempSeries);
-		waterTempGraph.setViewPort(1, 15);
+		waterTempGraph.setViewPort(1, 50);
 		waterTempGraph.setManualYAxisBounds(240, 100);
 		waterTempGraph.getGraphViewStyle().setNumVerticalLabels(5);
 		waterTempGraph.setScalable(true);
