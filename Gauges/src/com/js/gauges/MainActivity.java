@@ -1,6 +1,7 @@
 package com.js.gauges;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.UUID;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,7 +28,10 @@ import android.view.WindowManager;
 //3 - Voltage
 
 public class MainActivity extends Activity {
+	
+	private static final boolean IS_DEBUG = false;
 	public static final String MESSAGE = "com.js.gauges.MESSAGE";
+	public static final String GAUGE_VALUE_MESSAGE = "com.js.gauges.GAUGE_MESSAGE";
 	public static final int MESSAGE_WRITE = 1;
 	private static final int RESULT_SETTINGS = 1;
 	private static final String DEVICE_ADDRESS =  "00:13:12:06:50:21";	
@@ -60,11 +64,36 @@ public class MainActivity extends Activity {
         voltage = (VoltageGauge) findViewById(R.id.voltageGauge);
 
         this.setupActionBar();
-        this.showLoading();        
-        new InitConnect().execute();
+        this.showLoading();   
+        
+        if (IS_DEBUG) {
+        	dataSimulator.start();
+        }
+        else{
+        	new InitConnect().execute();	
+        }
        
     }
     
+    Thread dataSimulator = new Thread()
+    {
+        @Override
+        public void run() {
+            try {
+                while(true) {
+                    sleep(100);
+                
+    				double random = Math.random() * 1022;
+    				int test = (int) Math.round(random);
+    				int[] testArray = {test, test, test ,test};
+    				mHandler.obtainMessage(MainActivity.MESSAGE_WRITE, -1, -1, testArray).sendToTarget();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
     private class InitConnect extends AsyncTask<Void, Void, Boolean> {
     	 @Override
          protected Boolean doInBackground(Void... params) {
@@ -76,9 +105,7 @@ public class MainActivity extends Activity {
     	                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
     	                    startActivityForResult(enableBtIntent, 1);
     	                }
-    	            	arduino = bluetoothAdapter.getRemoteDevice(DEVICE_ADDRESS);
-    	            	socket = arduino.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
-    	            	
+
     	            	IntentFilter filter1 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
     	            	registerReceiver(mReceiver, filter1);
     	            	
@@ -126,6 +153,8 @@ public class MainActivity extends Activity {
     private boolean connectToArduino() {
     	
     	try {
+        	arduino = bluetoothAdapter.getRemoteDevice(DEVICE_ADDRESS);
+        	socket = arduino.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
         	//bluetoothAdapter.cancelDiscovery();
         	socket.connect();        	
         	reader = new StreamReader(socket, mHandler);
@@ -154,6 +183,17 @@ public class MainActivity extends Activity {
                     oilTemp.setVoltage(getVoltageFromArduinoScale(values[1]));
                     waterTemp.setVoltage(getVoltageFromArduinoScale(values[2]));                    
                     voltage.setVoltage(getVoltageFromArduinoScale(values[3]));
+                    
+                    HashMap<String, Double> map = new HashMap<String, Double>();
+    				map.put("oilPressure", oilPressure.getValue());
+    				map.put("oilTemp", oilTemp.getValue());
+    				map.put("waterTemp", waterTemp.getValue());
+    				map.put("voltage", voltage.getValue());
+    				
+    				Intent intent = new Intent();
+    				intent.setAction(GAUGE_VALUE_MESSAGE);
+    				intent.putExtra("data", map);
+    				sendBroadcast(intent);
             	}
             	
                 break;
@@ -176,6 +216,17 @@ public class MainActivity extends Activity {
             }           
         }
     };
+    
+    //let's try this?
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+		if (socket != null) {
+			try {
+				socket.close();
+			} catch (IOException e) {}
+		}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -196,6 +247,10 @@ public class MainActivity extends Activity {
 		        oilTemp.resetPeakValues();
 		        waterTemp.resetPeakValues();
 		        voltage.resetPeakValues();
+				break;
+			case R.id.graph_view:
+				Intent j = new Intent(this, GraphActivity.class);
+				startActivityForResult(j, 1);
 				break;
 		}
  

@@ -21,6 +21,11 @@
                 android:summary=""
                 android:key="minVoltage"
                 android:defaultValue="12.5"/>
+       <EditTextPreference
+                android:title="Graph Refresh Rate (ms)"
+                android:summary=""
+                android:key="graphRefreshRate"
+                android:defaultValue="500"/>
     </PreferenceCategory>
  
 </PreferenceScreen>

@@ -4,8 +4,7 @@
     <string name="app_name">VSR Gauges</string>
     <string name="action_settings">Settings</string>
     <string name="reset_peak">Reset Peak Values</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="edit_message">Whad up</string>
+    <string name="graph_view">Graphs</string>
     <string name="button_send">Send</string>
     <string name="title_activity_display_message">My Message</string>
     <color name="green">#99CC00</color>
