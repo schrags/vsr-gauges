@@ -108,8 +108,9 @@ public class MainActivity extends Activity {
 
     	            	IntentFilter filter1 = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
     	            	registerReceiver(mReceiver, filter1);
+
+    	            	new ConnectThread().execute();
     	            	
-    	            	connectTillSuccess();   	
     	            }
     	        }
     	        catch(Exception e) {
@@ -118,6 +119,7 @@ public class MainActivity extends Activity {
     	        }
     		 	return true;
          }
+
     }
     
     private void setupActionBar() {		
@@ -135,21 +137,40 @@ public class MainActivity extends Activity {
     }
     
     private void showLoading() {
-    	oilPressure.showNoData();
-        oilTemp.showNoData();
-        waterTemp.showNoData();
-        voltage.showNoData();
-    }
+    	
+    	runOnUiThread(new Runnable() {
+    	     @Override
+    	     public void run() {
 
-    private void connectTillSuccess() {
-    	showLoading();
-    	while(!connectToArduino()) {
-    		try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
-    	}
+    	     	oilPressure.showNoData();
+    	        oilTemp.showNoData();
+    	        waterTemp.showNoData();
+    	        voltage.showNoData();
+
+    	    }
+    	});
+    	
     }
-        
+    
+    private class ConnectThread extends AsyncTask<Void, Void, Boolean> {
+   	 @Override
+        protected Boolean doInBackground(Void... params) {
+   		 try {
+   			showLoading();
+   	    	while(!connectToArduino()) {
+   	    		try {
+   					Thread.sleep(100);
+   				} catch (InterruptedException e) {}
+   	    	}
+   	        }
+   	        catch(Exception e) {
+   	        	Log.w("Connect", "ConnectThread error", e);
+   	        	return false;
+   	        }
+   		 	return true;
+        }
+   }
+   
     private boolean connectToArduino() {
     	
     	try {
@@ -212,7 +233,7 @@ public class MainActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();           
             if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
-            	connectTillSuccess();
+            	new ConnectThread().execute();
             }           
         }
     };
