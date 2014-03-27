@@ -16,6 +16,13 @@ public abstract class GaugeView extends LinearLayout {
 	public boolean showPeakMin = false;
 	public boolean showPeakMax = false;
 	
+	//Gauge views
+	private LinearLayout sensorLayout;
+	private TextView sensorValue;
+	private TextView minMaxValue;
+	private TextView sensorType;
+	
+	
 	public GaugeView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.GaugeView, 0, 0);
@@ -27,8 +34,13 @@ public abstract class GaugeView extends LinearLayout {
 		}		
 		inflate(context, R.layout.gauge_view, this);		
 		preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		TextView sensorValue = (TextView) findViewById(R.id.sensorType);
-		sensorValue.setText(this.getDisplayLabel());
+		
+		sensorLayout = (LinearLayout) findViewById(R.id.sensorLayout);
+		sensorValue = (TextView) findViewById(R.id.sensorValue);
+		minMaxValue = (TextView) findViewById(R.id.sensorMinMax);
+		sensorType = (TextView) findViewById(R.id.sensorType);
+		sensorType.setText(this.getDisplayLabel());
+		
 	}
 	
 	public SharedPreferences getPreferences() {
@@ -41,10 +53,10 @@ public abstract class GaugeView extends LinearLayout {
 	}
 
 	private void refreshDisplay() {
-		 TextView sensorValue = (TextView) findViewById(R.id.sensorValue);
+//		 TextView sensorValue = (TextView) findViewById(R.id.sensorValue);
 		 sensorValue.setText(this.getDisplayValue());
 		 
-		 TextView minMaxValue = (TextView) findViewById(R.id.sensorMinMax);
+//		 TextView minMaxValue = (TextView) findViewById(R.id.sensorMinMax);
 		 String minMax = "";
 		 if (showPeakMin)
 		 {
@@ -58,15 +70,17 @@ public abstract class GaugeView extends LinearLayout {
 		 }
 		 minMaxValue.setText(minMax);
 
-		 setInRange(isInRange(), (LinearLayout) findViewById(R.id.sensorLayout));
+//		 setInRange(isInRange(), (LinearLayout) findViewById(R.id.sensorLayout));
+		 setInRange(isInRange(), sensorLayout);
 	}
 	
 	public void showNoData() {
-		TextView sensorValue = (TextView) findViewById(R.id.sensorValue);
+//		TextView sensorValue = (TextView) findViewById(R.id.sensorValue);
 		sensorValue.setText("--");
-		TextView minMaxValue = (TextView) findViewById(R.id.sensorMinMax);
-		minMaxValue.setText("");
-		setInRange(false, (LinearLayout) findViewById(R.id.sensorLayout));
+//		TextView minMaxValue = (TextView) findViewById(R.id.sensorMinMax);
+//		minMaxValue.setText("");
+//		setInRange(false, (LinearLayout) findViewById(R.id.sensorLayout));
+		setInRange(false, sensorLayout);
 	}
 	
 	public double getPeakMax() {
