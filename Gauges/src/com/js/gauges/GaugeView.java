@@ -47,16 +47,14 @@ public abstract class GaugeView extends LinearLayout {
 		return preferences;
 	}
 
-	private void setInRange(boolean inRange, LinearLayout grid) {
+	private void setInRange(boolean inRange) {
 		int color = inRange ? R.color.green : R.color.red;
-		grid.setBackgroundColor(getResources().getColor(color));
+		sensorLayout.setBackgroundColor(getResources().getColor(color));
 	}
 
 	private void refreshDisplay() {
-//		 TextView sensorValue = (TextView) findViewById(R.id.sensorValue);
 		 sensorValue.setText(this.getDisplayValue());
 		 
-//		 TextView minMaxValue = (TextView) findViewById(R.id.sensorMinMax);
 		 String minMax = "";
 		 if (showPeakMin)
 		 {
@@ -70,17 +68,12 @@ public abstract class GaugeView extends LinearLayout {
 		 }
 		 minMaxValue.setText(minMax);
 
-//		 setInRange(isInRange(), (LinearLayout) findViewById(R.id.sensorLayout));
-		 setInRange(isInRange(), sensorLayout);
+		 setInRange(isInRange());
 	}
 	
 	public void showNoData() {
-//		TextView sensorValue = (TextView) findViewById(R.id.sensorValue);
 		sensorValue.setText("--");
-//		TextView minMaxValue = (TextView) findViewById(R.id.sensorMinMax);
-//		minMaxValue.setText("");
-//		setInRange(false, (LinearLayout) findViewById(R.id.sensorLayout));
-		setInRange(false, sensorLayout);
+		setInRange(false);
 	}
 	
 	public double getPeakMax() {
