@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
                 while(true) {
                     sleep(100);
                 
-    				double random = Math.random() * 1022;
+    				double random = Math.random() * 760 + 205d; //tweaked to display more realistic values
     				int test = (int) Math.round(random);
     				int[] testArray = {test, test, test ,test};
     				mHandler.obtainMessage(MainActivity.MESSAGE_WRITE, -1, -1, testArray).sendToTarget();
@@ -134,6 +134,8 @@ public class MainActivity extends Activity {
 				
 			}
 		});
+    	
+    	getActionBar().hide();
     }
     
     private void showLoading() {

@@ -49,6 +49,8 @@
 
             <com.js.gauges.VoltageGauge
                 android:id="@+id/voltageGauge"
+                custom:showPeakMax="true"
+                custom:showPeakMin="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />

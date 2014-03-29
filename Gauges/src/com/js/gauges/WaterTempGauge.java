@@ -15,7 +15,7 @@ public class WaterTempGauge extends GaugeView {
 	}
 	
 	public String getDisplayLabel() {
-		return "Water Temperature (F)";
+		return "Water Temp (F)";
 	}
 	public boolean isInRange() {
 		int max = Integer.parseInt(getPreferences().getString("maxWaterTemperature", "210"));

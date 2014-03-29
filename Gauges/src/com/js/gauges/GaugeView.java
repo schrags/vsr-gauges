@@ -107,7 +107,7 @@ public abstract class GaugeView extends LinearLayout {
 	}
 	
 	public String valueFormatter(double value) {
-		return String.format("%.2f", value);
+		return String.format("%.1f", value);
 	}
 	
 	public abstract double voltageToValue(double voltage);
