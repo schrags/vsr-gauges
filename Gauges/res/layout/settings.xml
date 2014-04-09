@@ -5,27 +5,32 @@
         <EditTextPreference
                 android:title="Minimum Oil Pressure (psi)"                
                 android:key="minOilPressure"
-                android:defaultValue="15"/>
+                android:defaultValue="15"
+                android:inputType="number"/>
         <EditTextPreference
                 android:title="Maximum Oil Temperature (f)"
                 android:summary=""
                 android:key="maxOilTemperature"
-                android:defaultValue="250"/>
+                android:defaultValue="250"
+                android:inputType="number"/>
         <EditTextPreference
                 android:title="Maximum Water Temperature (f)"
                 android:summary=""
                 android:key="maxWaterTemperature"
-                android:defaultValue="210"/>
+                android:defaultValue="210"
+                android:inputType="number"/>
        <EditTextPreference
                 android:title="Minimum Voltage (v)"
                 android:summary=""
                 android:key="minVoltage"
-                android:defaultValue="12.5"/>
+                android:defaultValue="13.2"
+                android:inputType="numberDecimal"/>
        <EditTextPreference
                 android:title="Graph Refresh Rate (ms)"
                 android:summary=""
                 android:key="graphRefreshRate"
-                android:defaultValue="500"/>
+                android:defaultValue="500"
+                android:inputType="number"/>
     </PreferenceCategory>
  
 </PreferenceScreen>

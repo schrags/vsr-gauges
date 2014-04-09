@@ -14,7 +14,7 @@ public class VoltageGauge extends GaugeView {
 	}
 
 	public boolean isInRange() {
-		double min = Double.parseDouble(getPreferences().getString("minVoltage","12.5"));
+		double min = Double.parseDouble(getPreferences().getString("minVoltage","13.2"));
 		return getValue() >= min;
 	}
 	
