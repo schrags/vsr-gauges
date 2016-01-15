@@ -179,7 +179,9 @@ public class MainActivity extends Activity {
         	arduino = bluetoothAdapter.getRemoteDevice(DEVICE_ADDRESS);
         	socket = arduino.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
         	//bluetoothAdapter.cancelDiscovery();
-        	socket.connect();        	
+        	socket.connect();  
+        	if (reader != null)
+        		reader.cancel();
         	reader = new StreamReader(socket, mHandler);
         	reader.start();
     	}
@@ -233,8 +235,11 @@ public class MainActivity extends Activity {
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();           
+            String action = intent.getAction();    
+
             if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+            	if (reader != null)
+            		reader.cancel();
             	new ConnectThread().execute();
             }           
         }

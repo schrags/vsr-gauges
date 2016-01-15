@@ -53,22 +53,26 @@ public abstract class GaugeView extends LinearLayout {
 	}
 
 	private void refreshDisplay() {
-		 sensorValue.setText(this.getDisplayValue());
-		 
-		 String minMax = "";
-		 if (showPeakMin)
-		 {
-			 minMax += "Min: " + valueFormatter(peakMin);
-		 }
-		 if (showPeakMax)
-		 {
-			 if (!minMax.equals(""))
-				 minMax += " / ";
-			 minMax += "Max: " + valueFormatter(peakMax);
-		 }
-		 minMaxValue.setText(minMax);
+		if(!sensorValue.getText().equals(this.getDisplayValue()))
+		{
+			sensorValue.setText(this.getDisplayValue());
+			 
+			 String minMax = "";
+			 if (showPeakMin)
+			 {
+				 minMax += "Min: " + valueFormatter(peakMin);
+			 }
+			 if (showPeakMax)
+			 {
+				 if (!minMax.equals(""))
+					 minMax += " / ";
+				 minMax += "Max: " + valueFormatter(peakMax);
+			 }
+			 minMaxValue.setText(minMax);
 
-		 setInRange(isInRange());
+			 setInRange(isInRange());
+		}
+		 
 	}
 	
 	public void showNoData() {
