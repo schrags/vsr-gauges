@@ -6,10 +6,12 @@ import java.util.regex.Pattern;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.util.Log;
 
 public class StreamReader extends Thread {
 	public static final String MESSAGE = "com.js.gauges.MESSAGE";
 	public static final char END_FLAG = '}';
+	private final int STREAM_WAIT_INTERVAL = 100;
 	
 	private final BluetoothSocket socket;
 	private final InputStream inputStream;
@@ -28,16 +30,17 @@ public class StreamReader extends Thread {
     }
         
     public void run() {
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[512];
         int bytes;
        
-        while (true) {
+        while (!this.isInterrupted()) {
             try {
                 bytes = inputStream.read(buffer);
                 String msg = new String(buffer, 0, (bytes != -1) ? bytes : 0 );                
                 forwardData(msg);
             } catch (IOException e) {
-            }
+            	e.printStackTrace();
+            }  
         }
     }
     
@@ -85,7 +88,9 @@ public class StreamReader extends Thread {
     
     public void cancel() {
         try {
+        	this.interrupt();
             socket.close();
+            inputStream.close();            
         } catch (IOException e) { }
     }
 	 
