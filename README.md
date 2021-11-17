@@ -4,6 +4,6 @@ Gauges for race cars get expensive.  They are also hard to read at a glance and 
 
 ![In Car](img/incar.png)
 
-![testing](img/prototype.png)
+![testing](img/prototype.jpg)
 
-![arduino](img/board.png)
+![arduino](img/board.jpg)
