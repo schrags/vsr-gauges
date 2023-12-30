@@ -10,6 +10,6 @@ void loop()
   String sensor3 = String(analogRead(A2));
   String sensor4 = String(analogRead(A3));
   String sensor5 = String(analogRead(A4));
-  Serial.print("{" + sensor1 + "|" + sensor2 + "|" + sensor3 + "|" + sensor4 + "|" + sensor5 "}");
+  Serial.print("{" + sensor1 + "|" + sensor2 + "|" + sensor3 + "|" + sensor4 + "|" + sensor5 + "}");
   delay(100);
 }
